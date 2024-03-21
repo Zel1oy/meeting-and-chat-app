@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_chat_user_table
+      author: arsen_mehdalskyi
+      changes:
+          - createTable:
+              tableName: chat_user
+              columns:
+              - column:
+                  name: chat_id
+                  type: bigint
+                  constraints:
+                      primaryKey: true
+                      nullable: false
+                      foreignKeyName: fk_chat_id
+                      references: chats(id)
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                      primaryKey: true
+                      nullable: false
+                      foreignKeyName: fk_member_id
+                      references: users(id)

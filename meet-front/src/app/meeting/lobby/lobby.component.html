@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row mb-3">
+    <div class="col">
+      <div class="bg-dark text-white py-2 px-3">Lobbies</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card border-secondary">
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <th class="meetings__header">Meetings</th>
+            </thead>
+            <tbody class="bg-light" *ngFor="let meeting of meetingList">
+              <div class="meeting__container">
+                <div class="meeting__info">
+                  <div class="meeting__info__name">
+                    <img class="meeting_icon" src="assets/meeting-icon.png" alt="Meeting Icon">
+                    {{meeting.name}}
+                  </div>
+                    {{ meeting.startTime | date:'dd.MM HH:mm' }} - {{meeting.endTime | date:'HH:mm dd.MM' }}
+                  <div>
+                  </div>
+                </div>
+                <div class="join__meeting_container">
+                  <button class="btn btn-primary" (click)="joinRoom(meeting.id)"> Join Room <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/></svg></button>
+                </div>
+              </div>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

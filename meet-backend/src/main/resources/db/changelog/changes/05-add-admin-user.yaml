@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_admin_user
+      author: arsen_mehdalskyi
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: first_name
+                  value: Admin
+              - column:
+                  name: last_name
+                  value: Adminovich
+              - column:
+                  name: email
+                  value: admin@a.ua
+              - column:
+                  name: password
+                  value: $2a$10$IwQ.C1d7bWTWcFEe/VTR8uqEsEvlgfD6RWmoISmiVc/buQULQv/Hu
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'admin@a.ua')
+              - column:
+                  name: role_id
+                  valueComputed: (SELECT id FROM roles WHERE name = 'ROLE_ADMIN')

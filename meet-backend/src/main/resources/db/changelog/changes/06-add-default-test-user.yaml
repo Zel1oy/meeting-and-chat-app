@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_default_test_user
+      author: arsen_mehdalskyi
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: first_name
+                  value: Default
+              - column:
+                  name: last_name
+                  value: Test
+              - column:
+                  name: email
+                  value: test@example.com
+              - column:
+                  name: password
+                  value: $2a$10$rF8rPFrnwra1AnXdOF3Bc.0jRidDW0KObAq8GyoNcJv.owg/3dsYO
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'test@example.com')
+              - column:
+                  name: role_id
+                  valueComputed: (SELECT id FROM roles WHERE name = 'ROLE_USER')

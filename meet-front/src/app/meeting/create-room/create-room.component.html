@@ -1,0 +1,34 @@
+<body>
+  <main id="room__lobby__container">
+    <div id="form__container">
+      <div id="form__container__header">
+        <p>👋 Configure Room</p>
+      </div>
+
+
+      <form id="lobby__form" (ngSubmit)="createMeeting(conferenceForm)" #conferenceForm="ngForm">
+
+        <div class="form__field__wrapper">
+          <label for="name">Conference name</label>
+          <input type="text" name="name" id="name" ngModel required placeholder="Enter a conference name..." />
+        </div>
+
+        <div class="form__field__wrapper">
+          <label for="startTime">Start time</label>
+          <input type="datetime-local" name="startTime" ngModel required id="startTime"/>
+        </div>
+
+        <div class="form__field__wrapper">
+          <label for="endTime">End time</label>
+          <input type="datetime-local" name="endTime" ngModel required id="endTime"/>
+        </div>
+
+        <div class="form__field__wrapper">
+          <button type="submit">Create Room
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>

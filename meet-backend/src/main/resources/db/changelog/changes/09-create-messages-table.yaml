@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_messages_table
+      author: arsen_mehdalskyi
+      changes:
+          - createTable:
+              tableName: messages
+              columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                      primaryKey: true
+                      nullable: false
+              - column:
+                  name: content
+                  type: text
+                  constraints:
+                      nullable: false
+              - column:
+                  name: time
+                  type: timestamp
+                  constraints:
+                      nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                      foreignKeyName: fk_sender_id
+                      referencedTableName: users
+                      referencedColumnNames: id
+                      nullable: false
+              - column:
+                  name: chat_id
+                  type: bigint
+                  constraints:
+                      foreignKeyName: fk_chat
+                      referencedTableName: chats
+                      referencedColumnNames: id
+                      nullable: false

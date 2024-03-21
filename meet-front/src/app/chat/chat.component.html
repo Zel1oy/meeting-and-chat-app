@@ -1,0 +1,177 @@
+<body>
+<div class="container-fluid h-100 mt-5">
+  <div class="row justify-content-center h-100">
+    <!-- =======================left Body================================ -->
+    <div class="col-md-4 col-xl-2 chat order-last order-lg-2">
+      <div class="card mb-sm-3 mb-md-0 contacts_card" *ngIf="!addChatSelected">
+        <div class="card-header">
+          <h1 class="chat-list-title">All Chats</h1>
+          <button type="button" class="btn btn-dark rounded-circle btn-md plus-sign" (click)="changeAddChatSelected()">
+            <span>+</span>
+          </button>
+        </div>
+        <div class="card-body contacts_body ">
+          <ul class="contacts chatList" *ngFor="let chat of chatList">
+            <li>
+              <div class="d-flex bd-highlight">
+                <div class="img_cont">
+                  <div class="rounded-circle user_img text_inside_circle">
+                    {{chat.name.substring(0,1)}}
+                  </div>
+                </div>
+
+                <div class="user_info" (click)="goToChat(chat)">
+                  <div style="margin-top: 1rem;">
+                    {{chat.name}}
+                  </div>
+                  <br>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer"></div>
+      </div>
+      <div class="card mb-sm-3 mb-md-0 contacts_card" *ngIf="addChatSelected">
+        <div class="card-header">
+          <button type="button" class="btn btn-light rounded-circle" (click)="changeAddChatSelected()">
+            <span>
+              <img src="assets/icons8-chat-room-20.png" alt="Return to chat icon">
+            </span>
+          </button>
+          <h1 class="chat-list-title">Add Chat</h1>
+        </div>
+        <div class="card-body contacts_body ">
+          <div class="addChatForm">
+            <div class="card-body">
+              <form (ngSubmit)="addChat()">
+                <div class="mb-3">
+                  <label for="chatName" class="form-label">Chat Name:</label>
+                  <input type="text" id="chatName" name="chatName" class="form-control" [(ngModel)]="chatToAdd.name" required>
+                </div>
+                <div class="mb-3">
+                  <label for="userEmail" class="form-label">User Email:</label>
+                  <div class="add__member">
+                    <input type="email" id="userEmail" name="userEmail" class="form-control" [(ngModel)]="memberToAdd" required>
+                    <button type="button" class="btn btn-primary" (click)="addMemberToChat(memberToAdd)">
+                      <span>+</span>
+                    </button>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Chat</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer"></div>
+      </div>
+    </div>
+
+    <!-- =============================Middle Body============================= -->
+    <div class="col-md-8 col-xl-5 chat order-md-1 order-lg-4">
+      <div class="card">
+        <div class="card-header msg_head">
+          <div class="d-flex bd-highlight">
+            <div *ngIf="selectedChat">
+              <div class="img_cont">
+                <div class="rounded-circle user_img text_inside_circle1">
+                  {{selectedChat.name.substring(0,1)}}
+                </div>
+              </div>
+              <div class="user_info">
+                <span>{{selectedChat.name}}</span>
+                <p>Message</p>
+              </div>
+            </div>
+            <div class="video_cam"></div>
+          </div>
+        </div>
+        <div class="card-body msg_card_body" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+
+          <div *ngIf="selectedChat">
+            <div *ngFor="let msg of selectedChat.messages">
+
+              <div class="d-flex justify-content-end mb-4" *ngIf="msg.sender==senderCheck">
+                <div class="msg_container_send">
+                  {{msg.content}}
+
+                  <span class="msg_time_send">{{msg.time.substring(11,16)}}</span>
+                </div>
+                <div class="img_cont_msg">
+                    <span
+                      class="rounded-circle user_img_msg text_inside_circle2">{{msg.sender.substring(0,1)}}
+                    </span>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-start mb-4" *ngIf="msg.sender!=senderCheck">
+                <div class="img_cont_msg">
+                    <span
+                      class="rounded-circle user_img_msg text_inside_circle3">{{msg.sender.substring(0,1)}}
+                    </span>
+                </div>
+                <div class="msg_container">
+                  {{msg.content}}
+                  <span class="msg_time">{{msg.time.substring(11,16)}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <form>
+            <div class="input-group">
+              <div class="input-group-append">
+                <span class="input-group-text attach_btn"></span>
+              </div>
+              <input name="messageToSend"
+                     class="form-control type_msg"
+                     [(ngModel)]="messageToSend.content"
+                     placeholder="Type your message...">
+              <div class="input-group-append">
+                <button class="input-group-text send_btn" (click)="sendMessage()">
+                  <i class="fa fa-location-arrow"></i> </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================Right Body========================= -->
+    <div class="col-md-4 col-xl-2 chat order-md-2 order-lg-5">
+      <div class="card mb-sm-3 mb-md-0 contacts_card">
+        <div class="card-header">
+          <h1 class="chat-list-title">Chat Users</h1>
+        </div>
+        <div class="card-body contacts_body">
+          <div class="chat__members" *ngIf="selectedChat">
+            <ul class="contacts chatList" *ngFor="let member of selectedChat.members">
+              <li>
+                <div class="d-flex bd-highlight">
+                  <div class="img_cont">
+                    <div class="rounded-circle user_img text_inside_circle">
+                      {{member.firstName.substring(0,1)}}
+                    </div>
+                  </div>
+                  <div class="user_info">
+                    <div style="margin-top: 1rem;">
+                      {{member.firstName + ' ' + member.lastName}}
+                    </div>
+                    <p style="color: black">{{ member.email }}</p>
+                    <br>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-footer"></div>
+      </div>
+    </div>
+
+    <div class="col-md-0 col-xl-1 order-lg-6"></div>
+  </div>
+</div>
+</body>
